@@ -7,27 +7,37 @@ namespace BookLibrary.Tests
     [TestFixture]
     public class BookTests
     {
+        private Book book = new Book("title", "author", 2000, "publishHous", "edition", 350, 50);
 
-        private Book book = new Book("title", "author", "year", "publishHous", "edition", "pages", "price");
-
-        [TestCase("G", ExpectedResult = "Book record: " + "author" + " title" + " publishHous")]
-        [TestCase("ATP", ExpectedResult = "Book record: " + "author" + " title" + " publishHous")]
-        [TestCase("ATY", ExpectedResult = "Book record: " + "author" + " title" + " year")]
-        [TestCase("AT", ExpectedResult = "Book record: " + "author" + " title")]
-        [TestCase("TYP", ExpectedResult = "Book record: " + "title" + " year" + " publishHous")]
-        [TestCase("T", ExpectedResult = "Book record: " + "title")]
-        [TestCase("ATPE", ExpectedResult = "Book record: " + "author" + " title" + " publishHous" + " edition")]
-        [TestCase("AEG", ExpectedResult = "Book record: " + "author" +" edition" + " pages")]
+        [TestCase("G", ExpectedResult = "Book record: author title publishHous")]
+        [TestCase("ATP", ExpectedResult = "Book record: author title publishHous")]
+        [TestCase("ATY", ExpectedResult = "Book record: author title 2000")]
+        [TestCase("AT", ExpectedResult = "Book record: author title")]
+        [TestCase("TYP", ExpectedResult = "Book record: title 2000 publishHous")]
+        [TestCase("T", ExpectedResult = "Book record: title")]
+        [TestCase("ATPE", ExpectedResult = "Book record: author title publishHous edition")]
+        [TestCase("AEG", ExpectedResult = "Book record: author edition 350")]
         public string ToFormat(string format)
         {
-            return String.Format(CultureInfo.CurrentCulture,"{0:" + format + "}",book);
+            return string.Format(CultureInfo.CurrentCulture,"{0:" + format + "}",book);
+        }
+
+        [TestCase("AP", ExpectedResult = "Book record: author $50.00")]
+        public string ToFormatDollarPrice(string format)
+        {
+            return string.Format(CultureInfo.CurrentCulture, "{0:" + format + "}", book);
+        }
+
+        [TestCase("AP", ExpectedResult = "Book record: author 50,00 €")]
+        public string ToFormatEuroPrice(string format)
+        {
+            return string.Format(CultureInfo.GetCultureInfo("fr-FR"), "{0:" + format + "}", book);
         }
 
         [Test]
         public void MethodToString_DifferentFormats_CorrectResult()
         {
-            Assert.Throws<FormatException>(() => String.Format(CultureInfo.CurrentCulture,"{0:e}",book));
-            
+            Assert.Throws<FormatException>(() => string.Format(CultureInfo.CurrentCulture,"{0:test}",book));        
         }
     }
 }

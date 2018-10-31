@@ -9,18 +9,18 @@ namespace BookExtension.Tests
     public class BookFormatExtensionTests
     {
         private IFormatProvider provider = new BookFormatExtension();
-        private Book book = new Book("title", "author", "year", "publishHous", "edition", "pages", "price");
+        private Book book = new Book("title", "author", 2000, "publishHous", "edition", 350, 50);
 
         [TestCase("H", ExpectedResult = "Book record: author title publishHous new string result")]
         public string ToFormat(string format)
         {
-            return String.Format(provider, "{0:" + format + "}", book);
+            return string.Format(provider, "{0:" + format + "}", book);
         }
 
         [Test]
         public void MethodToString_DifferentFormats_CorrectResult()
         {
-            Assert.Throws<FormatException>(() => String.Format(CultureInfo.CurrentCulture, "{0:e}", book));
+            Assert.Throws<FormatException>(() => string.Format(CultureInfo.CurrentCulture, "{0:test}", book));
         }
 
     }

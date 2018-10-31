@@ -10,15 +10,16 @@ namespace BookExtension
         {
 
             if (arg.GetType() != typeof(Book))
+            {
                 try
                 {
                     return HandleOtherFormats(fmt, arg);
                 }
                 catch (FormatException e)
                 {
-                    throw new FormatException(String.Format("The format of '{0}' is invalid.", fmt), e);
+                    throw new FormatException(string.Format("The format of '{0}' is invalid.", fmt), e);
                 }
-        
+            }
           
             string ufmt = fmt.ToUpper(CultureInfo.InvariantCulture);
             if (ufmt != "H")
@@ -29,21 +30,23 @@ namespace BookExtension
                 }
                 catch (FormatException e)
                 {
-                    throw new FormatException(String.Format("The format of '{0}' is invalid.", fmt), e);
+                    throw new FormatException(string.Format("The format of '{0}' is invalid.", fmt), e);
                 }
             }
-
-            string result = arg.ToString();
     
-            return result + " new string result";
+            return arg.ToString() + " new string result";
         }
 
         public object GetFormat(Type formatType)
         {
             if (formatType == typeof(ICustomFormatter))
+            {
                 return this;
+            }
             else
+            {
                 return null;
+            }
         }
 
         private string HandleOtherFormats(string format, object arg)
@@ -53,7 +56,7 @@ namespace BookExtension
             else if (arg != null)
                 return arg.ToString();
             else
-                return String.Empty;
+                return string.Empty;
         }
     }
 
